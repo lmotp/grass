@@ -12,7 +12,7 @@ float wave(float waveSize, float tipDistance, float centerDistance) {
   // 잎사귀가 얼마나 빠르게 흔들릴지 결정
   float waveDistance = isTip ? tipDistance : centerDistance;
   // return sin((uTime / 500.0) + waveSize) * waveDistance;
-  return normalize(uInclination.x) * waveSize * waveDistance;
+  return uInclination.y * waveDistance;
 }
 
 void main() {

@@ -10,27 +10,13 @@ const BLADE_HEIGHT_VARIATION = 0.6;
 const BLADE_VERTEX_COUNT = 5;
 const BLADE_TIP_OFFSET = 0.1;
 
-const inclination = {
-  x: 0,
-  y: 0,
-  z: 0,
-};
+const cloudTexture = new THREE.TextureLoader().load(cloudSrc);
+cloudTexture.wrapS = cloudTexture.wrapT = THREE.RepeatWrapping;
 
 // lerp와 비슷한 느낌의 보간법.
 function interpolate(val, oldMin, oldMax, newMin, newMax) {
   return ((val - oldMin) * (newMax - newMin)) / (oldMax - oldMin) + newMin;
 }
-function onDeviceOrientationEvent(e) {
-  const x = e.beta;
-  const y = e.gamma;
-  const z = e.alpha;
-
-  inclination.x = x;
-  inclination.y = y;
-  inclination.z = z;
-}
-
-window.addEventListener("deviceorientation", onDeviceOrientationEvent);
 
 class GrassGeometry extends THREE.BufferGeometry {
   constructor(size, count) {
@@ -107,15 +93,12 @@ class GrassGeometry extends THREE.BufferGeometry {
 
 class Grass extends THREE.Mesh {
   constructor(size, count) {
-    const cloudTexture = new THREE.TextureLoader().load(cloudSrc);
-    cloudTexture.wrapS = cloudTexture.wrapT = THREE.RepeatWrapping;
-
     const geometry = new GrassGeometry(size, count);
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uCloud: { value: cloudTexture },
         uTime: { value: 0 },
-        uInclination: { value: inclination },
+        uInclination: { value: new THREE.Vector3() },
       },
       side: THREE.DoubleSide,
       vertexShader,
@@ -125,15 +108,16 @@ class Grass extends THREE.Mesh {
     super(geometry, material);
 
     // 바닥 만듦
-    const floor = new THREE.Mesh(new THREE.CircleGeometry(30, 8).rotateX(Math.PI / 2), material);
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(15, 8).rotateX(Math.PI / 2), material);
     // 0을 제외하고 가장 작은 숫자만큼 y값을 내림.
     floor.position.y = -Number.EPSILON;
 
     this.add(floor);
   }
 
-  update(time) {
+  update(time, inclination) {
     this.material.uniforms.uTime.value = time;
+    this.material.uniforms.uInclination.value = inclination;
   }
 }
 
