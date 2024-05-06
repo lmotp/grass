@@ -4,6 +4,8 @@ import cloudSrc from "./assets/cloud.jpg";
 import vertexShader from "./shader/vertex.glsl";
 import fragmentShader from "./shader/fragment.glsl";
 
+import vertextGrassShaer from "./shader/grassVertex.glsl";
+
 const BLADE_WIDTH = 0.1;
 const BLADE_HEIGHT = 0.8;
 const BLADE_HEIGHT_VARIATION = 0.6;
@@ -94,6 +96,17 @@ class GrassGeometry extends THREE.BufferGeometry {
 class Grass extends THREE.Mesh {
   constructor(size, count) {
     const geometry = new GrassGeometry(size, count);
+    const grassMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uCloud: { value: cloudTexture },
+        uTime: { value: 0 },
+        uInclination: { value: new THREE.Vector3() },
+      },
+      side: THREE.DoubleSide,
+      vertexShader: vertextGrassShaer,
+      fragmentShader,
+    });
+
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uCloud: { value: cloudTexture },
