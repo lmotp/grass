@@ -1,10 +1,9 @@
 import * as THREE from "three";
 
-import cloudSrc from "./assets/cloud.jpg";
-import vertexShader from "./shader/vertex.glsl";
-import fragmentShader from "./shader/fragment.glsl";
+import fragmentShader from "./shader/grass/grassFragment.glsl";
+import vertexShader from "./shader/grass/grassVertex.glsl";
 
-import vertextGrassShaer from "./shader/grassVertex.glsl";
+import cloudSrc from "./assets/cloud.jpg";
 
 const BLADE_WIDTH = 0.1;
 const BLADE_HEIGHT = 0.8;
@@ -96,17 +95,6 @@ class GrassGeometry extends THREE.BufferGeometry {
 class Grass extends THREE.Mesh {
   constructor(size, count) {
     const geometry = new GrassGeometry(size, count);
-    const grassMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uCloud: { value: cloudTexture },
-        uTime: { value: 0 },
-        uInclination: { value: new THREE.Vector3() },
-      },
-      side: THREE.DoubleSide,
-      vertexShader: vertextGrassShaer,
-      fragmentShader,
-    });
-
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uCloud: { value: cloudTexture },
@@ -119,13 +107,6 @@ class Grass extends THREE.Mesh {
     });
 
     super(geometry, material);
-
-    // 바닥 만듦
-    const floor = new THREE.Mesh(new THREE.CircleGeometry(15, 8).rotateX(Math.PI / 2), material);
-    // 0을 제외하고 가장 작은 숫자만큼 y값을 내림.
-    floor.position.y = -Number.EPSILON;
-
-    this.add(floor);
   }
 
   update(time, inclination) {

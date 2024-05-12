@@ -1,5 +1,4 @@
 uniform float uTime;
-uniform vec3 uInclination;
 
 varying vec3 vPosition;
 varying vec2 vUv;
@@ -11,12 +10,10 @@ float wave(float waveSize, float tipDistance, float centerDistance) {
 
   // 잎사귀가 얼마나 빠르게 흔들릴지 결정
   float waveDistance = isTip ? tipDistance : centerDistance;
-  // return sin((uTime / 500.0) + waveSize) * waveDistance;
-  return (normalize(uInclination.x)) * waveSize * waveDistance;
+  return sin((uTime / 500.0) + waveSize) * waveDistance;
 }
 
 void main() {
-  vec3 bladePosition = position;
   vPosition = position;
   vUv = uv;
   vNormal = normalize(normalMatrix * normal);
@@ -24,10 +21,7 @@ void main() {
   if(vPosition.y < 0.0) {
     vPosition.y = 0.0;
   } else {
-    // vPosition.x += wave(uv.x * 10.0, 0.5, 0.1);
     vPosition.x += wave(uv.x * 10.0, 0.5, 0.1);
-    // vPosition.x += uInclination.x;
-    // vPosition.x += normalize(uInclination.x / 100.);
   }
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4(vPosition, 1.0);
