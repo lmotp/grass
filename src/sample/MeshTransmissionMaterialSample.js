@@ -1,11 +1,11 @@
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { MeshTransmissionMaterial } from "../material/MeshTransmissionMaterial.js";
 
-import cubeGlb from "../assets/gelatinous_cube-transformed.glb";
+const cubeGlb = new URL("../assets/gelatinous_cube-transformed.glb", import.meta.url).href;
 
 THREE.ColorManagement.legacyMode = false;
 

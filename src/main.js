@@ -1,12 +1,12 @@
 import * as THREE from "three";
 import * as dat from "lil-gui";
 
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { TransformControls } from "three/addons/controls/TransformControls.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { TransformControls } from "three/examples/jsm/controls/TransformControls.js";
 
-import Grass from "./Grass";
-import Glass from "./Glass";
-import floor from "./Floor";
+import Grass from "./Grass.js";
+import Glass from "./Glass.js";
+import floor from "./Floor.js";
 
 // 디바이스 기울기
 const gui = new dat.GUI();

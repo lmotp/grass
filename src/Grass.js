@@ -1,9 +1,10 @@
 import * as THREE from "three";
+const [vertexShader, fragmentShader] = await Promise.all([
+  fetch(new URL("./shader/grass/grassVertex.glsl", import.meta.url)).then((response) => response.text()),
+  fetch(new URL("./shader/grass/grassFragment.glsl", import.meta.url)).then((response) => response.text()),
+]);
 
-import fragmentShader from "./shader/grass/grassFragment.glsl";
-import vertexShader from "./shader/grass/grassVertex.glsl";
-
-import cloudSrc from "./assets/cloud.jpg";
+const cloudSrc = new URL("./assets/cloud.jpg", import.meta.url).href;
 
 const BLADE_WIDTH = 0.1;
 const BLADE_HEIGHT = 0.8;

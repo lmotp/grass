@@ -1,11 +1,10 @@
 import * as THREE from "three";
+const [vertexShader, fragmentShader] = await Promise.all([
+  fetch(new URL("./shader/floor/vertex.glsl", import.meta.url)).then((response) => response.text()),
+  fetch(new URL("./shader/floor/fragment.glsl", import.meta.url)).then((response) => response.text()),
+]);
 
-import vertexShader from "./shader/floor/vertex.glsl";
-import fragmentShader from "./shader/floor/fragment.glsl";
-
-import cloudSrc from "./assets/cloud.jpg";
-
-const cloudTexture = new THREE.TextureLoader().load(cloudSrc);
+const cloudTexture = new THREE.TextureLoader().load(new URL("./assets/cloud.jpg", import.meta.url).href);
 cloudTexture.wrapS = cloudTexture.wrapT = THREE.RepeatWrapping;
 
 const material = new THREE.ShaderMaterial({

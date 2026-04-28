@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { MeshTransmissionMaterial } from "./material/MeshTransmissionMaterial.js";
 
-import normalTexture from "./assets/dirt1.png";
+const normalTexture = new URL("./assets/dirt1.png", import.meta.url).href;
 
 export default (renderTarget) => {
   const normalMapTexture = new THREE.TextureLoader().load(normalTexture);
@@ -25,7 +25,7 @@ export default (renderTarget) => {
     color: new THREE.Color("white"),
   });
   material.normalMap = normalMapTexture;
-  material.map = renderTarget.texture
+  material.map = renderTarget.texture;
 
   const mesh = new THREE.Mesh(geometry, material);
 
