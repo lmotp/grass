@@ -18,7 +18,7 @@ const material = new THREE.ShaderMaterial({
   vertexShader,
   fragmentShader,
 });
-const floor = new THREE.Mesh(new THREE.CircleGeometry(5, 8).rotateX(Math.PI / 2), material);
+const floor = new THREE.Mesh(new THREE.CircleGeometry(15, 8).rotateX(Math.PI / 2), material);
 
 // 0을 제외하고 가장 작은 숫자만큼 y값을 내림.
 floor.position.y = -Number.EPSILON;
